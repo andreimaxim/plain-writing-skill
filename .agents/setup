@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Amp's base orb includes uv; it selects a compatible Python for the project.
+uv --version
+printf 'Syncing eval dependencies from evals/uv.lock\n'
+started=$SECONDS
+uv sync --locked --project "$repo_root/evals"
+printf 'Eval dependencies ready in %ss\n' "$((SECONDS - started))"

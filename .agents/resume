@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Dependencies survive pause/resume. Do not reinstall or require API credentials.
+command -v uv >/dev/null
+if [[ ! -x "$repo_root/evals/.venv/bin/python" ]]; then
+  printf 'Eval environment missing; run .agents/setup to restore it.\n' >&2
+  exit 1
+fi
